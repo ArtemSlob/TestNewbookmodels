@@ -17,7 +17,7 @@ namespace TestNewbookmodels
         }
 
         [Test]
-        public void Test1()
+        public void SignupTest()
         {
             Assert.Pass();
         }
