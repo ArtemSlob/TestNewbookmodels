@@ -3,6 +3,7 @@ using System.Threading;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace TestNewbookmodels
 {
@@ -12,10 +13,11 @@ namespace TestNewbookmodels
         [SetUp]
         public void Setup()
         {
-            driver = new ChromeDriver();
-            driver.Manage().Window.Maximize();
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--start-maximized");
+            driver = new ChromeDriver(options);
             driver.Navigate().GoToUrl("https://newbookmodels.com/");
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         [Test]
@@ -46,13 +48,12 @@ namespace TestNewbookmodels
             companyWebsiteField.SendKeys("abdulashchur.com");
             IWebElement locationField = driver.FindElement(By.CssSelector("[name='location']"));
             locationField.SendKeys("FGH Building, Harrison Avenue, Boston, MA, USA");
-            Thread.Sleep(1000);
-            locationField.SendKeys(Keys.ArrowDown);
-            locationField.SendKeys(Keys.Enter);
+            IWebElement locationGoogle = driver.FindElement(By.CssSelector("[class='pac-item']"));
+            locationGoogle.Click();
             IWebElement industryInput = driver.FindElement(By.CssSelector("[name='industry']"));
             industryInput.Click();
-            industryInput.SendKeys(Keys.Enter);
-            Thread.Sleep(1000);
+            IWebElement industryOption = driver.FindElements(By.CssSelector("[role='option']"))[0];
+            industryOption.Click();
             IWebElement signupFinishButton = driver.FindElement(By.CssSelector("[type='submit']"));
             signupFinishButton.Click();
             Assert.Pass();
@@ -61,7 +62,7 @@ namespace TestNewbookmodels
         [TearDown]
         public void After()
         {
-            //driver.Quit();
+            driver.Dispose();
         }
     }
 }
