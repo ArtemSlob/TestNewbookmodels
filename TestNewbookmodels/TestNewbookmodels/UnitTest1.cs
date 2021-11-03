@@ -22,7 +22,7 @@ namespace TestNewbookmodels
         }
 
         [Test]
-        public void SignupTest()
+        public void RegistrationTest()
         {
             DateTime dateTimeNow = DateTime.Now;
             string stringDateTimeNow = dateTimeNow.ToShortDateString() + "." 
@@ -68,7 +68,7 @@ namespace TestNewbookmodels
         }
 
         [Test]
-        public void SignupNegativeTest()
+        public void RegistrationNegativeTest()
         {
             IWebElement navBarSignUpButton = driver.FindElement(By.ClassName("Navbar__signUp--12ZDV"));
             navBarSignUpButton.Click();
