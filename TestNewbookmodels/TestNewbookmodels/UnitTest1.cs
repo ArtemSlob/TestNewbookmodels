@@ -4,6 +4,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 namespace TestNewbookmodels
 {
@@ -48,15 +49,38 @@ namespace TestNewbookmodels
             companyWebsiteField.SendKeys("abdulashchur.com");
             IWebElement locationField = driver.FindElement(By.CssSelector("[name='location']"));
             locationField.SendKeys("FGH Building, Harrison Avenue, Boston, MA, USA");
+            WebDriverWait wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[class='pac-item']")));
             IWebElement locationGoogle = driver.FindElement(By.CssSelector("[class='pac-item']"));
             locationGoogle.Click();
             IWebElement industryInput = driver.FindElement(By.CssSelector("[name='industry']"));
             industryInput.Click();
+            wait.Until(ExpectedConditions.ElementExists(By.CssSelector("[role='option']")));
             IWebElement industryOption = driver.FindElements(By.CssSelector("[role='option']"))[0];
             industryOption.Click();
+            Thread.Sleep(1000);
             IWebElement signupFinishButton = driver.FindElement(By.CssSelector("[type='submit']"));
             signupFinishButton.Click();
-            Assert.Pass();
+            Thread.Sleep(1000);
+            string expectedResultURL = "https://newbookmodels.com/explore";
+            string actualResultURL = driver.Url;
+            Assert.AreEqual(expectedResultURL, actualResultURL);
+        }
+
+        [Test]
+        public void SignupNegativeTest()
+        {
+            IWebElement navBarSignUpButton = driver.FindElement(By.ClassName("Navbar__signUp--12ZDV"));
+            navBarSignUpButton.Click();
+            IWebElement signupNextButton = driver.FindElement(By.CssSelector("[type='submit']"));
+            signupNextButton.Click();
+            Thread.Sleep(1000);
+            IWebElement signupFinishButton = driver.FindElement(By.CssSelector("[type='submit']"));
+            signupFinishButton.Click();
+            Thread.Sleep(1000);
+            string expectedResultURL = "https://newbookmodels.com/join";
+            string actualResultURL = driver.Url;
+            Assert.AreEqual(expectedResultURL, actualResultURL);
         }
 
         [TearDown]
