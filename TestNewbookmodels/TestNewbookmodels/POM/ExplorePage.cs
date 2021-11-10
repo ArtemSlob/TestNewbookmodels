@@ -11,9 +11,17 @@ namespace TestNewbookmodels.POM
     {
         private readonly IWebDriver _webDriver;
 
+        private readonly By _welcomTitle = By.CssSelector("[class='Section__title--1wSQt']");
+
+
         public ExplorePage(IWebDriver webDriver)
         {
             _webDriver = webDriver;
+        }
+
+        public string WelcomeTitleText()
+        {
+            return _webDriver.FindElements(_welcomTitle)[0].Text;
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestNewbookmodels.POM
@@ -43,12 +44,15 @@ namespace TestNewbookmodels.POM
         public SignUpCompanyPage InputLocationField(string location)
         {
             _webDriver.FindElement(_locationField).SendKeys(location);
+            Thread.Sleep(1000);
+            _webDriver.FindElement(_locationField).SendKeys(Keys.ArrowDown);
+            Thread.Sleep(1000);
+            _webDriver.FindElement(_locationField).SendKeys(Keys.Enter);
             return this;
         }
 
         public void ClickLocationGoogle()
         {
-            Wait.Until(ExpectedConditions.ElementExists(_locationGoogle));
             _webDriver.FindElement(_locationGoogle).Click();
         }
 
@@ -59,10 +63,15 @@ namespace TestNewbookmodels.POM
 
         public void ClickIndustryOption()
         {
-            _webDriver.FindElement(_industryOption).Click();
+            _webDriver.FindElements(_industryOption)[0].Click();
+            Thread.Sleep(1000);
         }
 
-        public void ClickSignupFinishButton() =>
+        public void ClickSignupFinishButton()
+        {
             _webDriver.FindElement(_signupFinishButton).Click();
+            Thread.Sleep(1000);
+        }
+            
     }
 }

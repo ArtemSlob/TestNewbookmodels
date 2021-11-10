@@ -35,6 +35,7 @@ namespace TestNewbookmodels
             var homeage = new Homepage(_webDriver);
             var signUpPage = new SignUpPage(_webDriver);
             var signUpCompanyPage = new SignUpCompanyPage(_webDriver);
+            var explorePage = new ExplorePage(_webDriver);
 
             homeage.GoToHomepage()
                 .ClickNavBarSignUpButton();
@@ -47,15 +48,32 @@ namespace TestNewbookmodels
                 .ClickSignupNextButton();
             signUpCompanyPage.InputCompanyNameField("Abdula Inc.")
                 .InputCompanyWebsiteField("abdulashchur.com")
-                .InputLocationField("FGH Building, Harrison Avenue, Boston, MA, USA")
-                .ClickLocationGoogle();
+                .InputLocationField("FGH Building, Harrison Avenue, Boston, MA, USA");
             signUpCompanyPage.ClickIndustryInput();
             signUpCompanyPage.ClickIndustryOption();
-            Thread.Sleep(1000);
             signUpCompanyPage.ClickSignupFinishButton();
+            string actualResultURL = _webDriver.Url;
+            Assert.AreEqual("https://newbookmodels.com/explore", actualResultURL);
+            Assert.IsTrue(explorePage.WelcomeTitleText().Contains("Abdula"));
+        }
+
+        [Test]
+        public void Authorization()
+        {
+            var homeage = new Homepage(_webDriver);
+            var signInPage = new SignInPage(_webDriver);
+            var explorePage = new ExplorePage(_webDriver);
+
+            homeage.GoToHomepage()
+                .ClickNavBarLogInLink();
+            signInPage.GoToSignInPage()
+                .InputEmailField("a556793195@emailnax.com")
+                .InputPasswordField("Qwerty1!")
+                .ClickLoginButton();
             Thread.Sleep(1000);
             string actualResultURL = _webDriver.Url;
             Assert.AreEqual("https://newbookmodels.com/explore", actualResultURL);
+            Assert.IsTrue(explorePage.WelcomeTitleText().Contains("Abdula"));
         }
 
         //[Test]
@@ -76,7 +94,7 @@ namespace TestNewbookmodels
 
 
         [Test]
-        public void LoginWithWrongCredential()
+        public void AuthorizationWithWrongCredential()
         {
             var signInPage = new SignInPage(_webDriver);
             signInPage.GoToSignInPage()
