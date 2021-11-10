@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TestNewbookmodels.POM
@@ -39,9 +40,11 @@ namespace TestNewbookmodels.POM
             return this;
         }
 
-        public void ClickLoginButton() =>
+        public void ClickLoginButton()
+        {
             _webDriver.FindElement(_loginButton).Click();
-
+            Thread.Sleep(1000);
+        }
         public string GetErrorMessage()
         {
             return _webDriver.FindElement(_errorMessage).Text;

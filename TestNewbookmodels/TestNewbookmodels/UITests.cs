@@ -36,6 +36,7 @@ namespace TestNewbookmodels
             var signUpPage = new SignUpPage(_webDriver);
             var signUpCompanyPage = new SignUpCompanyPage(_webDriver);
             var explorePage = new ExplorePage(_webDriver);
+            string actualResultURL;
 
             homeage.GoToHomepage()
                 .ClickNavBarSignUpButton();
@@ -52,28 +53,38 @@ namespace TestNewbookmodels
             signUpCompanyPage.ClickIndustryInput();
             signUpCompanyPage.ClickIndustryOption();
             signUpCompanyPage.ClickSignupFinishButton();
-            string actualResultURL = _webDriver.Url;
+            actualResultURL = _webDriver.Url;
             Assert.AreEqual("https://newbookmodels.com/explore", actualResultURL);
             Assert.IsTrue(explorePage.WelcomeTitleText().Contains("Abdula"));
         }
 
         [Test]
-        public void Authorization()
+        public void AuthorizationTest()
         {
-            var homeage = new Homepage(_webDriver);
-            var signInPage = new SignInPage(_webDriver);
-            var explorePage = new ExplorePage(_webDriver);
+            var explorePage = new ExplorePage(_webDriver); 
+            var authorization = new AdditionalMethods(_webDriver)
+                .Authorization();
+            string actualResultURL;
 
-            homeage.GoToHomepage()
-                .ClickNavBarLogInLink();
-            signInPage.GoToSignInPage()
-                .InputEmailField("a556793195@emailnax.com")
-                .InputPasswordField("Qwerty1!")
-                .ClickLoginButton();
-            Thread.Sleep(1000);
-            string actualResultURL = _webDriver.Url;
+            actualResultURL = _webDriver.Url;
             Assert.AreEqual("https://newbookmodels.com/explore", actualResultURL);
             Assert.IsTrue(explorePage.WelcomeTitleText().Contains("Abdula"));
+        }
+
+        [Test]
+        public void LogoutTest()
+        {
+            var explorePage = new ExplorePage(_webDriver);
+            var accountSettingsPage = new AccountSettingsPage(_webDriver);
+            var authorization = new AdditionalMethods(_webDriver)
+                .Authorization();
+            string actualResultURL;
+
+            explorePage.ClickAvatarIcon();
+            accountSettingsPage.ClickLogoutLink();
+            explorePage.GoToExplorePage();
+            actualResultURL = _webDriver.Url;
+            Assert.AreEqual("https://newbookmodels.com/auth/signin?goBackUrl=%2Fexplore", actualResultURL);
         }
 
         //[Test]
