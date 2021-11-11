@@ -84,14 +84,14 @@ namespace TestNewbookmodels.POM
 
         public AccountSettingsPage InputLastNameGeneralInfo(string lastNameGeneralInfo)
         {
-            _webDriver.FindElement(_firstNameGeneralInfoEditInput).Clear();
+            _webDriver.FindElement(_lastNameGeneralInfoEditInput).Clear();
             _webDriver.FindElement(_lastNameGeneralInfoEditInput).SendKeys(lastNameGeneralInfo);
             return this;
         }
 
         public AccountSettingsPage InputCompanyLocationGeneralInfo(string companyLocationGeneralInfo)
         {
-            _webDriver.FindElement(_firstNameGeneralInfoEditInput).Clear();
+            _webDriver.FindElement(_companyLocationGeneralInfoEditInput).Clear();
             _webDriver.FindElement(_companyLocationGeneralInfoEditInput).SendKeys(companyLocationGeneralInfo);
             Thread.Sleep(1000);
             _webDriver.FindElement(_companyLocationGeneralInfoEditInput).SendKeys(Keys.ArrowDown);
@@ -102,7 +102,7 @@ namespace TestNewbookmodels.POM
 
         public AccountSettingsPage InputCompanyIndustryGeneralInfo(string companyIndustryGeneralInfo)
         {
-            _webDriver.FindElement(_firstNameGeneralInfoEditInput).Clear();
+            _webDriver.FindElement(_companyIndustryGeneralInfoEditInput).Clear();
             _webDriver.FindElement(_companyIndustryGeneralInfoEditInput).SendKeys(companyIndustryGeneralInfo);
             return this;
         }

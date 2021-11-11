@@ -129,6 +129,43 @@ namespace TestNewbookmodels
             Assert.IsTrue(actualResultNameContainsNewName);
         }
 
+        [Test]
+        public void EditCompanyLocationTest()
+        {
+            var explorePage = new ExplorePage(_webDriver);
+            var accountSettingsPage = new AccountSettingsPage(_webDriver);
+            var authorization = new AdditionalMethods(_webDriver);
+            bool actualResultNameContainsNewName;
+            string newCompanyLocation = "San Francisco, CA, USA";
+
+            authorization.Authorization();
+            explorePage.ClickAvatarIcon();
+            accountSettingsPage.ClickGeneralInfoEditButton();
+            accountSettingsPage.InputCompanyLocationGeneralInfo(newCompanyLocation)
+                .ClickSaveGeneralInfoChangesButton();
+            actualResultNameContainsNewName = accountSettingsPage.NonEditablePersonalDataCompanyLocationFieldText().Contains(newCompanyLocation);
+            Assert.IsTrue(actualResultNameContainsNewName);
+        }
+
+        [Test]
+        public void EditCompanyIndustryTest()
+        {
+            var explorePage = new ExplorePage(_webDriver);
+            var accountSettingsPage = new AccountSettingsPage(_webDriver);
+            var authorization = new AdditionalMethods(_webDriver);
+            bool actualResultNameContainsNewName;
+            string newCompanyIndustry;
+
+            authorization.Authorization();
+            explorePage.ClickAvatarIcon();
+            accountSettingsPage.ClickGeneralInfoEditButton();
+            newCompanyIndustry = "Promotion" + AdditionalMethods.DateTimeNowString;
+            accountSettingsPage.InputCompanyIndustryGeneralInfo(newCompanyIndustry)
+                .ClickSaveGeneralInfoChangesButton();
+            actualResultNameContainsNewName = accountSettingsPage.NonEditablePersonalCompanyIndustryText().Contains(newCompanyIndustry);
+            Assert.IsTrue(actualResultNameContainsNewName);
+        }
+
         //[Test]
         //public void AddCardTest()
         //{
