@@ -64,7 +64,7 @@ namespace TestNewbookmodels.POM
         public void ClickIndustryOption()
         {
             _webDriver.FindElements(_industryOption)[0].Click();
-            Thread.Sleep(1000);
+            Wait.Until(ExpectedConditions.ElementToBeClickable(_signupFinishButton));
         }
 
         public void ClickSignupFinishButton()

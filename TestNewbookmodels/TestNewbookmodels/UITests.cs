@@ -32,13 +32,13 @@ namespace TestNewbookmodels
         [Test]
         public void RegistrationTest()
         {
-            var homeage = new Homepage(_webDriver);
+            var homepage = new Homepage(_webDriver);
             var signUpPage = new SignUpPage(_webDriver);
             var signUpCompanyPage = new SignUpCompanyPage(_webDriver);
             var explorePage = new ExplorePage(_webDriver);
             string actualResultURL;
 
-            homeage.GoToHomepage()
+            homepage.GoToHomepage()
                 .ClickNavBarSignUpButton();
             signUpPage.InputFirstNameField("Abdula")
                 .InputLastNameField("Shchur")
@@ -92,21 +92,41 @@ namespace TestNewbookmodels
         }
 
         [Test]
-        public void EditNameTest()
+        public void EditFirstNameTest()
         {
             var explorePage = new ExplorePage(_webDriver);
-            var signInPage = new SignInPage(_webDriver);
             var accountSettingsPage = new AccountSettingsPage(_webDriver);
             var authorization = new AdditionalMethods(_webDriver);
-            string actualResult;
+            bool actualResultNameContainsNewName;
+            string newFirstName;
 
             authorization.Authorization();
             explorePage.ClickAvatarIcon();
             accountSettingsPage.ClickGeneralInfoEditButton();
+            newFirstName = "Abdula" + AdditionalMethods.DateTimeNowString;
+            accountSettingsPage.InputFirstNameGeneralInfo(newFirstName)
+                .ClickSaveGeneralInfoChangesButton();
+            actualResultNameContainsNewName = accountSettingsPage.NonEditablePersonalDataNameFieldText().Contains(newFirstName);
+            Assert.IsTrue(actualResultNameContainsNewName);
+        }
 
-            Thread.Sleep(10000);
-            actualResult = "";
-            Assert.AreEqual("", actualResult);
+        [Test]
+        public void EditLastNameTest()
+        {
+            var explorePage = new ExplorePage(_webDriver);
+            var accountSettingsPage = new AccountSettingsPage(_webDriver);
+            var authorization = new AdditionalMethods(_webDriver);
+            bool actualResultNameContainsNewName;
+            string newLastName;
+
+            authorization.Authorization();
+            explorePage.ClickAvatarIcon();
+            accountSettingsPage.ClickGeneralInfoEditButton();
+            newLastName = "Schur" + AdditionalMethods.DateTimeNowString;
+            accountSettingsPage.InputLastNameGeneralInfo(newLastName)
+                .ClickSaveGeneralInfoChangesButton();
+            actualResultNameContainsNewName = accountSettingsPage.NonEditablePersonalDataNameFieldText().Contains(newLastName);
+            Assert.IsTrue(actualResultNameContainsNewName);
         }
 
         //[Test]
@@ -119,7 +139,7 @@ namespace TestNewbookmodels
         //        .InputCardFullName("Abdula Schur")
         //        .InputCardNumber("377439511404894")
         //        .InputCardExpirationDate("12/22")
-        //        .InputcardCVC("377")
+        //        .InputCardCVC("377")
         //        .ClickCardSaveChangesButton();
 
         //    actualResult = "";
