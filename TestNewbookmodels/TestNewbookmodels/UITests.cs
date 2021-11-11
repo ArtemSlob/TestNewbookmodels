@@ -75,32 +75,55 @@ namespace TestNewbookmodels
         public void LogoutTest()
         {
             var explorePage = new ExplorePage(_webDriver);
+            var signInPage = new SignInPage(_webDriver);
             var accountSettingsPage = new AccountSettingsPage(_webDriver);
-            var authorization = new AdditionalMethods(_webDriver)
-                .Authorization();
+            var authorization = new AdditionalMethods(_webDriver);
             string actualResultURL;
+            bool isLoginButtonPresent;
 
+            authorization.Authorization();
             explorePage.ClickAvatarIcon();
             accountSettingsPage.ClickLogoutLink();
             explorePage.GoToExplorePage();
             actualResultURL = _webDriver.Url;
+            isLoginButtonPresent = signInPage.IsLoginButtonPresent();
             Assert.AreEqual("https://newbookmodels.com/auth/signin?goBackUrl=%2Fexplore", actualResultURL);
+            Assert.IsTrue(isLoginButtonPresent);
+        }
+
+        [Test]
+        public void EditNameTest()
+        {
+            var explorePage = new ExplorePage(_webDriver);
+            var signInPage = new SignInPage(_webDriver);
+            var accountSettingsPage = new AccountSettingsPage(_webDriver);
+            var authorization = new AdditionalMethods(_webDriver);
+            string actualResult;
+
+            authorization.Authorization();
+            explorePage.ClickAvatarIcon();
+            accountSettingsPage.ClickGeneralInfoEditButton();
+
+            Thread.Sleep(10000);
+            actualResult = "";
+            Assert.AreEqual("", actualResult);
         }
 
         //[Test]
-        //public void RegistrationNegativeTest()
+        //public void AddCardTest()
         //{
-        //    IWebElement navBarSignUpButton = _webDriver.FindElement(By.ClassName("Navbar__signUp--12ZDV"));
-        //    navBarSignUpButton.Click();
-        //    IWebElement signupNextButton = _webDriver.FindElement(By.CssSelector("[type='submit']"));
-        //    signupNextButton.Click();
-        //    Thread.Sleep(1000);
-        //    IWebElement signupFinishButton = _webDriver.FindElement(By.CssSelector("[type='submit']"));
-        //    signupFinishButton.Click();
-        //    Thread.Sleep(1000);
-        //    string expectedResultURL = "https://newbookmodels.com/join";
-        //    string actualResultURL = _webDriver.Url;
-        //    Assert.AreEqual(expectedResultURL, actualResultURL);
+        //    var accountSettingsPage = new AccountSettingsPage(_webDriver);
+        //    string actualResult;
+
+        //    accountSettingsPage.GoToAccountSettingsPage()
+        //        .InputCardFullName("Abdula Schur")
+        //        .InputCardNumber("377439511404894")
+        //        .InputCardExpirationDate("12/22")
+        //        .InputcardCVC("377")
+        //        .ClickCardSaveChangesButton();
+
+        //    actualResult = "";
+        //    Assert.AreEqual("", actualResult);
         //}
 
 

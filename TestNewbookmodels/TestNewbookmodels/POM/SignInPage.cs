@@ -45,9 +45,16 @@ namespace TestNewbookmodels.POM
             _webDriver.FindElement(_loginButton).Click();
             Thread.Sleep(1000);
         }
+
         public string GetErrorMessage()
         {
             return _webDriver.FindElement(_errorMessage).Text;
+        }
+
+        public bool IsLoginButtonPresent()
+        {
+            _webDriver.FindElement(_loginButton);
+            return true;
         }
     }
 }
